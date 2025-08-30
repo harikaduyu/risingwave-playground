@@ -41,9 +41,8 @@ make monitor       # Show monitoring endpoints
 ## 📁 File Structure
 
 ### Pipeline SQL Files
-- **`datagen2nats.sql`**: Creates CloudEvents generator and NATS sink
-- **`nats_source.sql`**: Creates NATS JetStream source connector
-- **`kafka_sink.sql`**: Creates Kafka sink for downstream processing
+- **`datagen2nats.sql`**: Creates CloudEvents generator, analytics view, and NATS sink
+- **`nats2kafka.sql`**: Creates NATS JetStream source connector and Kafka sink
 
 ### Configuration Files
 - **`docker-compose.yml`**: Complete service orchestration
@@ -78,7 +77,7 @@ CREATE SOURCE cloudevents_generator (
 ```
 
 ### Data Generation
-- **Rate**: 3 CloudEvents per second
+- **Rate**: 10 CloudEvents per second
 - **Format**: JSON with realistic event data
 - **Distribution**: Random data with seeded randomness for reproducibility
 
