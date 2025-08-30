@@ -1,0 +1,77 @@
+# Docker and container files
+docker-compose.override.yml
+.dockerignore
+
+# Docker volumes and data
+postgres-0/
+grafana-0/
+minio-0/
+prometheus-0/
+message_queue/
+nats-data/
+
+# Logs
+*.log
+logs/
+docker-compose.log
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Node.js (if any frontend components)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python (if any Python scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# RisingWave specific
+risingwave-data/
+hummock_001/
+*.meta
+*.data
+
+# Test data and temporary files
+test-data/
+temp/
+tmp/
+
+# Backup files
+*.backup
+*.old
+*.orig

@@ -1,0 +1,53 @@
+RisingWave Multi-Source Streaming Pipeline
+Copyright (c) 2024 Harika Duyu
+
+This project contains modifications and extensions to RisingWave configurations.
+
+---
+
+## Original RisingWave Work
+
+This project incorporates configurations and examples derived from:
+
+RisingWave: Real-time event streaming platform
+Copyright (c) 2023 RisingWave Labs
+https://github.com/risingwavelabs/risingwave
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+---
+
+## Third-Party Components
+
+This project uses the following third-party components:
+
+- Grafana (Apache License 2.0) - https://github.com/grafana/grafana
+- PostgreSQL (PostgreSQL License) - https://www.postgresql.org/about/licence/
+- Prometheus (Apache License 2.0) - https://github.com/prometheus/prometheus
+- MinIO (Apache License 2.0) - https://github.com/minio/minio
+- Redpanda (BSL 1.1) - https://github.com/redpanda-data/redpanda
+- NATS (Apache License 2.0) - https://github.com/nats-io/nats-server
+
+---
+
+## Modifications
+
+The original RisingWave configurations have been modified to include:
+- NATS JetStream integration for message streaming
+- Kafka (Redpanda) sinks for downstream processing
+- CloudEvents-based data generation and processing
+- Enhanced monitoring with custom Grafana dashboards
+- Makefile-based automation for pipeline management
+- Comprehensive documentation and examples
+
+These modifications are provided under the MIT License.
