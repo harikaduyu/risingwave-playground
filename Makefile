@@ -29,8 +29,7 @@ restart:
 
 deploy:
 	@psql -h localhost -p 4566 -d dev -U root -f pipelines/datagen2nats.sql
-	@psql -h localhost -p 4566 -d dev -U root -f pipelines/nats_source.sql
-	@psql -h localhost -p 4566 -d dev -U root -f pipelines/kafka_sink.sql
+	@psql -h localhost -p 4566 -d dev -U root -f pipelines/nats2kafka.sql
 
 check-pipeline:
 	@echo "📊 Streaming jobs:"
@@ -38,8 +37,9 @@ check-pipeline:
 	@echo ""
 	@echo "📡 NATS messages (cloudevents subject):"
 	@nats sub cloudevents --server localhost:4222 --count 5 2>/dev/null || echo "❌ No NATS messages found"
+	@sleep 5
 	@echo "📈 Kafka topics data:"
-	@docker exec message_queue rpk topic consume cloudevents --num 10 --format json 2>/dev/null || echo "❌ No messages in cloudevents topic"
+	@docker exec message_queue rpk topic consume cloudevents --num 5 --format json 2>/dev/null || echo "❌ No messages in cloudevents topic"
 
 clean:
 	@docker exec message_queue rpk topic delete cloudevents 2>/dev/null || true

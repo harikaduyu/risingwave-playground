@@ -63,7 +63,7 @@ CREATE SOURCE IF NOT EXISTS cloudevents_generator (
     fields.eventSpecificData.length = 150,
     fields.eventSpecificData.seed = 12,
     
-    datagen.rows.per.second = '3'
+    datagen.rows.per.second = '10'
 );
 
 CREATE MATERIALIZED VIEW cloudevents_analytics AS
