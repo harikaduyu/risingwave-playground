@@ -56,6 +56,6 @@ monitor:
 	@echo "  Grafana: http://localhost:3001 (admin/admin)"
 	@echo "  Prometheus: http://localhost:9500"
 	@echo "  MinIO Console: http://localhost:9400 (hummockadmin/hummockadmin)"
-	@echo "  NATS: localhost:4222"
-	@echo "  RisingWave: localhost:4566"
+	@echo "  NATS: http://localhost:4222"
+	@echo "  RisingWave UI: http://localhost:5691"
 	@echo "  Redpanda Console: http://localhost:8081"
