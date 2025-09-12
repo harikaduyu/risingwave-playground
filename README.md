@@ -91,6 +91,7 @@ CREATE SOURCE cloudevents_generator (
 | Service | Port | URL | Credentials |
 |---------|------|-----|-------------|
 | RisingWave | 4566 | `psql -h localhost -p 4566 -d dev -U root` | No password |
+| RisingWave UI| 5691 |  http://localhost:5691 | no password |
 | Grafana | 3001 | http://localhost:3001 | admin/admin |
 | Prometheus | 9500 | http://localhost:9500 | - |
 | MinIO Console | 9400 | http://localhost:9400 | hummockadmin/hummockadmin |
