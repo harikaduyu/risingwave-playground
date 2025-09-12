@@ -70,6 +70,7 @@ hummock_001/
 test-data/
 temp/
 tmp/
+tmp*
 
 # Backup files
 *.backup
