@@ -270,6 +270,83 @@ services:
       timeout: 5s
       retries: 5
     restart: always
+
+  # PostgreSQL for CDC simulation
+  postgres-cdc:
+    image: "postgres:15-alpine"
+    container_name: postgres-cdc
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=cdc_demo
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=C --lc-ctype=C
+    command: >
+      postgres
+      -c wal_level=logical
+      -c max_replication_slots=10
+      -c max_wal_senders=10
+      -c shared_preload_libraries=pgoutput
+    expose:
+      - "5432"
+    ports:
+      - "5433:5432"
+    volumes:
+      - "postgres-cdc:/var/lib/postgresql/data"
+      - "./init-scripts/postgres-cdc-init.sql:/docker-entrypoint-initdb.d/init.sql"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+  # MongoDB for CDC simulation
+  mongodb-cdc:
+    image: "mongo:7.0"
+    container_name: mongodb-cdc
+    environment:
+      - MONGO_INITDB_DATABASE=cdc_demo
+    expose:
+      - "27017"
+    ports:
+      - "27017:27017"
+    volumes:
+      - "mongodb-cdc:/data/db"
+    command: ["mongod", "--replSet", "rs0", "--bind_ip_all"]
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: always
+
+  # MongoDB Replica Set and Database Initializer
+  mongodb-init:
+    image: "mongo:7.0"
+    container_name: mongodb-init
+    depends_on:
+      - mongodb-cdc
+    volumes:
+      - "./init-scripts/mongodb-cdc-init.js:/init-script.js"
+    command: >
+      bash -c "
+        echo 'Waiting for MongoDB to be ready...' &&
+        sleep 15 &&
+        echo 'Initializing replica set...' &&
+        mongosh --host mongodb-cdc:27017 --eval '
+          rs.initiate({
+            _id: \"rs0\",
+            members: [{ _id: 0, host: \"mongodb-cdc:27017\" }]
+          })
+        ' &&
+        echo 'Waiting for replica set to be ready...' &&
+        sleep 10 &&
+        echo 'Running database initialization script...' &&
+        mongosh --host mongodb-cdc:27017 < /init-script.js &&
+        echo 'MongoDB replica set and database initialized successfully!'
+      "
+    restart: "no"
+
 volumes:
   postgres-0:
     external: false
@@ -282,4 +359,8 @@ volumes:
   message_queue:
     external: false
   nats-data:
+    external: false
+  postgres-cdc:
+    external: false
+  mongodb-cdc:
     external: false
